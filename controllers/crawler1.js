@@ -25,12 +25,19 @@ const pool = new Pool({
     connectionTimeoutMillis: 20000,  // Increase timeout as needed
     idleTimeoutMillis: 30000       // Increase idle timeout as needed
 });
+
 // Biến toàn cục để lưu trữ số hàng đã được chèn vào cơ sở dữ liệu
 // let insertedCount = 0;
 
 async function crawlData() {
     try {
-        const browser = await puppeteer.launch();
+        // const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            executablePath: puppeteer.executablePath() // Sử dụng đường dẫn đến Chrome đã cài đặt
+        });
+
+
         const page = await browser.newPage();
         await page.goto('https://ccfddl.github.io/');
         const htmlContent = await page.content();

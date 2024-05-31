@@ -104,16 +104,7 @@ controller.addWeblist = async (req, res) => {
     req.flash('success', `Da them du lieu thanh cong nhe! so hang duoc them moi: ${insertedCount}`)
     await clearFlash(req, res); // Gọi middleware để xóa req.flash
     // res.redirect('/home')
-    
-
-    // Kiểm tra xem biến rowsInserted có giá trị không trước khi sử dụng nó
-    // if (insertedCount !== undefined) {
-    //     console.log(`so hang them vao CONTROLLER: ${insertedCount}`);
-    //     req.flash('success', `Da them du lieu thanh cong nhe! so hang duoc them moi: ${insertedCount}`);
-    // } else {
-    //     console.log('Khong co gia tri rowsInserted.');
-    //     req.flash('success', 'Da them du lieu thanh cong!');
-    // }
+        
 
     res.redirect('/home');
 
