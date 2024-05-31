@@ -32,10 +32,16 @@ const pool = new Pool({
 async function crawlData() {
     try {
         // const browser = await puppeteer.launch();
+        // const browser = await puppeteer.launch({
+        //     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        //     executablePath: puppeteer.executablePath() // Sử dụng đường dẫn đến Chrome đã cài đặt
+        // });
+
         const browser = await puppeteer.launch({
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            executablePath: puppeteer.executablePath() // Sử dụng đường dẫn đến Chrome đã cài đặt
+            executablePath: '/opt/render/.cache/puppeteer/chrome/linux-125.0.6422.78/chrome-linux/chrome' // Cập nhật đường dẫn này
         });
+        
 
 
         const page = await browser.newPage();
