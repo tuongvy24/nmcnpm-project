@@ -37,7 +37,7 @@ controller.viewList = async (req, res) => {
     let keyword = req.query.keyword || '';
 
     // bao dam chi sort theo price, newest, popular thoi
-    let sort = ['location', 'date', 'now_deadline'].includes(req.query.sort) ? req.query.sort : 'price';
+    let sort = ['location', 'date', 'now_deadline'].includes(req.query.sort) ? req.query.sort : 'location';
 
     let options = {
         // attributes: ['id', 'title', 'description', 'imagePath', 'summary', 'createdAt'],
