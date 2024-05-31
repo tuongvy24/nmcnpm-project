@@ -1,0 +1,35 @@
+{
+  "development": {
+    "username": "nmcnpmprojectdb",
+    "password": "vQy4JE9KFjxdq3iGsHLvoFwrA5a3K1UJ",
+    "database": "nmcnpmprojectdb",
+    "host": "dpg-cpc9bke3e1ms739i77lg-a.singapore-postgres.render.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "nmcnpmprojectdb",
+    "password": "vQy4JE9KFjxdq3iGsHLvoFwrA5a3K1UJ",
+    "database": "nmcnpmprojectdb",
+    "host": "dpg-cpc9bke3e1ms739i77lg-a.singapore-postgres.render.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}

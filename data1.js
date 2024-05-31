@@ -1,0 +1,122 @@
+[
+  {
+    "col_0": "NSPW 2024",
+    "col_1": "September 16-18, 2024 Bedford, PA USA",
+    "col_2": "New Security Paradigms Workshop",
+    "col_3": "CCF C NOTE:",
+    "col_4": "网络与信息安全",
+    "col_5": "00 day 01 h 24 m 05 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Sat Apr 13th 2024 17:59:00 +07 (2024-04-12 23:59:00 UTC-11)",
+    "col_9": "website: https://www.nspw.org/2024/cfp"
+  },
+  {
+    "col_0": "ACM MM 2024",
+    "col_1": "October 28-November 01, 2024 Melbourne, Australia",
+    "col_2": "ACM International Conference on Multimedia",
+    "col_3": "CCF A NOTE: abstract deadline on Apr 9, 2024.",
+    "col_4": "计算机图形学与多媒体",
+    "col_5": "00 day 02 h 25 m 04 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Sat Apr 13th 2024 18:59:59 +07 (2024-04-12 23:59:59 UTC-12)",
+    "col_9": "website: https://2024.acmmm.org/"
+  },
+  {
+    "col_0": "ISSTA 2024",
+    "col_1": "September 16-20, 2024 Vienna, Austria",
+    "col_2": "ACM SIGSOFT International Symposium on Software Testing and Analysis",
+    "col_3": "CCF A NOTE: Technical Papers Submission deadline (Round 2)",
+    "col_4": "软件工程/系统软件/程序设计语言",
+    "col_5": "00 day 02 h 25 m 04 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Sat Apr 13th 2024 18:59:59 +07 (2024-04-12 23:59:59 UTC-12)",
+    "col_9": "website: https://conf.researchr.org/home/issta-2024"
+  },
+  {
+    "col_0": "PRCV 2024",
+    "col_1": "Oct 18-20, 2024 Urumchi, China",
+    "col_2": "Chinese Conference on Pattern Recognition and Computer Vision",
+    "col_3": "CCF C NOTE:",
+    "col_4": "计算机图形学与多媒体",
+    "col_5": "02 days 06 h 25 m 04 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Mon Apr 15th 2024 22:59:59 +07 (2024-04-15 23:59:59 UTC+8)",
+    "col_9": "website: http://www.prcv.cn/"
+  },
+  {
+    "col_0": "FM 2024",
+    "col_1": "September 09-13, 2024 Milan, Italy",
+    "col_2": "International Symposium on Formal Methods",
+    "col_3": "CCF A NOTE: Abstract Submission",
+    "col_4": "软件工程/系统软件/程序设计语言",
+    "col_5": "03 days 02 h 24 m 05 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Tue Apr 16th 2024 18:59:00 +07 (2024-04-15 23:59:00 UTC-12)",
+    "col_9": "website: https://www.fm24.polimi.it/"
+  },
+  {
+    "col_0": "RAID 2024",
+    "col_1": "September 30 - October 2, 2024 Palazzo della Salute, Padua, Italy",
+    "col_2": "International Symposium on Recent Advances in Intrusion Detection",
+    "col_3": "CCF B NOTE:",
+    "col_4": "网络与信息安全",
+    "col_5": "03 days 02 h 25 m 04 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Tue Apr 16th 2024 18:59:59 +07 (2024-04-15 23:59:59 UTC-12)",
+    "col_9": "website: https://raid2024.github.io/"
+  },
+  {
+    "col_0": "CHES 2024",
+    "col_1": "September, 2024 Halifax, Canada",
+    "col_2": "International Conference on Cryptographic Hardware and Embedded Systems",
+    "col_3": "CCF B NOTE: Schedule for TCHES Volume 2023/4",
+    "col_4": "网络与信息安全",
+    "col_5": "03 days 02 h 25 m 04 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Tue Apr 16th 2024 18:59:59 +07 (2024-04-15 23:59:59 UTC-12)",
+    "col_9": "website: https://ches.iacr.org/2024/"
+  },
+  {
+    "col_0": "SIGMOD 2025",
+    "col_1": "unknown, 2025 Berlin, Germany",
+    "col_2": "ACM Conference on Management of Data",
+    "col_3": "CCF A NOTE: round 2",
+    "col_4": "数据库/数据挖掘/内容检索",
+    "col_5": "05 days 02 h 24 m 05 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Thu Apr 18th 2024 18:59:00 +07 (2024-04-17 23:59:00 UTC-12)",
+    "col_9": "website: https://2025.sigmod.org/"
+  },
+  {
+    "col_0": "NDSS 2025",
+    "col_1": "February 23 - February 28, 2025 San Diego, California",
+    "col_2": "Network and Distributed System Security (NDSS) Symposium",
+    "col_3": "CCF A NOTE: Summer",
+    "col_4": "网络与信息安全",
+    "col_5": "05 days 02 h 25 m 04 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Thu Apr 18th 2024 18:59:59 +07 (2024-04-17 23:59:59 UTC-12)",
+    "col_9": "website: https://www.ndss-symposium.org/ndss2025/"
+  },
+  {
+    "col_0": "MICRO 2024",
+    "col_1": "November 2-6, 2024 Austin, Texas, USA",
+    "col_2": "IEEE/ACM International Symposium on Microarchitecture",
+    "col_3": "CCF A NOTE: Full Paper Deadline",
+    "col_4": "计算机体系结构/并行与分布计算/存储系统",
+    "col_5": "05 days 07 h 25 m 04 sGoogle CalendariCloud Calendar",
+    "col_6": "Google Calendar",
+    "col_7": "iCloud Calendar",
+    "col_8": "Deadline: Thu Apr 18th 2024 23:59:59 +07 (2024-04-18 11:59:59 UTC-5)",
+    "col_9": "website: https://microarch.org/micro57/"
+  }
+]
