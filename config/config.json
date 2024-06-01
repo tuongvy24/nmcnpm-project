@@ -20,11 +20,7 @@
     "dialect": "mysql"
   },
   "production": {
-    "use_env_variable": "POSTGRESQL_URL",
-    "username": "nmcnpmprojectdb",
-    "password": "vQy4JE9KFjxdq3iGsHLvoFwrA5a3K1UJ",
-    "database": "nmcnpmprojectdb",
-    "host": "dpg-cpc9bke3e1ms739i77lg-a.singapore-postgres.render.com",
+    "use_env_variable": "POSTGRESQL_URL",    
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
