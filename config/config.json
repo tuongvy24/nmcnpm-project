@@ -20,6 +20,7 @@
     "dialect": "mysql"
   },
   "production": {
+    "use_env_variable": "POSTGRESQL_URL",
     "username": "nmcnpmprojectdb",
     "password": "vQy4JE9KFjxdq3iGsHLvoFwrA5a3K1UJ",
     "database": "nmcnpmprojectdb",

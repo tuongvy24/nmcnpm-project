@@ -1,7 +1,9 @@
 'use strict';
+require('dotenv').config(); // Load biến môi trường từ tệp .env
+
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const expressHandlebars = require('express-handlebars');
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -48,7 +50,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //cau hinh su dung session cho gio hang
 app.use(session({
-  secret: 'S3cret',
+  secret: process.env.SESSION_SECRET,
 //   secret: process.env.SESSION_SECRET,
 //   store: new redisStore({ client: redisClient }), //dung redis
   resave: false,

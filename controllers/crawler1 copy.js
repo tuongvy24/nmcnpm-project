@@ -2,7 +2,6 @@
 
 const { Pool } = require('pg');
 const puppeteer = require('puppeteer');
-const axios = require('axios');
 const cheerio = require('cheerio');
 // const moment = require('moment');
 const moment = require('moment-timezone');
@@ -32,29 +31,13 @@ const pool = new Pool({
 
 async function crawlData() {
     try {
+        const browser = await puppeteer.launch();
+
         
-                
-        url = 'https://ccfddl.github.io/';
-
-        // // puppeteer
-        // const browser = await puppeteer.launch();
-        // const page = await browser.newPage();
-        // await page.goto(url);
-        // const htmlContent = await page.content();
-        // const $ = cheerio.load(htmlContent);
-
-
-         // Khởi chạy Puppeteer với các tham số bổ sung để tránh các vấn đề liên quan đến sandbox
-        const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            executablePath: process.env.CHROME_EXECUTABLE_PATH || puppeteer.executablePath()
-        });
         const page = await browser.newPage();
-        await page.goto(url);
+        await page.goto('https://ccfddl.github.io/');
         const htmlContent = await page.content();
         const $ = cheerio.load(htmlContent);
-
-        
 
         const data = [];
 
@@ -104,8 +87,7 @@ async function crawlData() {
             });
             data.push(rowData);
         });
-        // await browser.close();
-        console.log('Final Conference Data:', data);
+        await browser.close();
         return data;
     } catch (error) {
         console.error('Error while crawling data:', error);

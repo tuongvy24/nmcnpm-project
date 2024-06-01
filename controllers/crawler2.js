@@ -27,67 +27,7 @@ const pool = new Pool({
 // let insertedCount = 0;
 // URL của trang web cần crawl
 const url = 'https://www.lix.polytechnique.fr/~hermann/conf.php';
-// async function crawlData() {
-//     try {
-//         const browser = await puppeteer.launch();
-//         const page = await browser.newPage();
-//         await page.goto('https://ccfddl.github.io/');
-//         const htmlContent = await page.content();
-//         const $ = cheerio.load(htmlContent);
-//         const data = [];
-//         $('tbody .el-table__row').each((index, row) => {
-//             const rowData = {};
-//             $(row).find('.el-row').each((idx, div) => {
-//                 let columnName;
-//                 // Extracting data from HTML
-//                 // ...
-//                 switch(idx) {
-//                 case 0:
-//                     columnName = 'title';
-//                     break;
-//                 case 1:                       
-//                         // Tách thông tin ngày và địa điểm từ cột col_1 bằng biểu thức chính quy
-//                     const col1Content = $(div).text().trim();
-//                     const dateRegex = /^(.*?\d{4})/; // Biểu thức chính quy để tìm ngày
-//                     const locationRegex = /\d{4}(.*)/; // Biểu thức chính quy để tìm địa điểm
-//                     const dateMatch = col1Content.match(dateRegex);
-//                     const locationMatch = col1Content.match(locationRegex);
-//                     rowData['date'] = dateMatch ? dateMatch[0].trim() : ''; 
-//                     rowData['location'] = locationMatch ? locationMatch[1].trim() : ''; 
-//                     break;
-//                 case 2:
-//                     columnName = 'conference';
-//                     break;
-//                 case 3:
-//                     columnName = 'remark';
-//                     break;
-//                 case 8:
-//                     columnName = 'deadline';
-//                     break;
-//                 case 9:                        
-//                     // Tách URL từ chuỗi "website: URL"
-//                     const websiteContent = $(div).text().trim();
-//                     const website = websiteContent.split('website: ')[1].trim();                       
-//                     rowData['website'] = website; // Lưu URL vào cột website
-//                     // console.log(rowData['website'])
-//                     break;
-//                 default:
-//                     columnName = `col_${idx}`;
-//                 }
 
-//                 // Lấy nội dung của div và gán vào cột mới
-//                 const value = $(div).text().trim();
-//                 rowData[columnName] = value;
-//             });
-//             data.push(rowData);
-//         });
-//         await browser.close();
-//         return data;
-//     } catch (error) {
-//         console.error('Error while crawling data:', error);
-//         throw error;
-//     }
-// }
 
 async function crawlData() {
   try {
