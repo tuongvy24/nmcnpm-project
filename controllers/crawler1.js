@@ -104,7 +104,7 @@ async function crawlData() {
             });
             data.push(rowData);
         });
-        // await browser.close();
+        await browser.close();
         console.log('Final Conference Data:', data);
         return data;
     } catch (error) {
