@@ -2,6 +2,7 @@
 
 const { Pool } = require('pg');
 const puppeteer = require('puppeteer');
+require("dotenv").config();
 const axios = require('axios');
 const cheerio = require('cheerio');
 // const moment = require('moment');
@@ -31,9 +32,7 @@ const pool = new Pool({
 // let insertedCount = 0;
 
 async function crawlData() {
-    try {
-        
-                
+    try {        
         url = 'https://ccfddl.github.io/';
 
         // // puppeteer
@@ -46,8 +45,13 @@ async function crawlData() {
 
          // Khởi chạy Puppeteer với các tham số bổ sung để tránh các vấn đề liên quan đến sandbox
         const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            executablePath: process.env.CHROME_EXECUTABLE_PATH || puppeteer.executablePath()
+            args: [
+                '--disable-setuid-sandbox',
+                '--no-sandbox', 
+                '--single-process',
+                '--no-zygote',
+            ],
+            executablePath: process.env.NODE_ENV === "production" ?process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath()
         });
         const page = await browser.newPage();
         await page.goto(url);
