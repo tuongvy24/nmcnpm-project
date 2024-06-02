@@ -41,24 +41,48 @@ async function crawlData() {
         // await page.goto(url);
         // const htmlContent = await page.content();
         // const $ = cheerio.load(htmlContent);
+        
 
 
          // Khởi chạy Puppeteer với các tham số bổ sung để tránh các vấn đề liên quan đến sandbox
-        const browser = await puppeteer.launch({
-            args: [
-                '--disable-setuid-sandbox',
-                '--no-sandbox', 
-                '--single-process',
-                '--no-zygote',
-            ],
-            executablePath: process.env.NODE_ENV === "production" ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath()
-        });
+        // const browser = await puppeteer.launch({
+        //     args: [
+        //         '--disable-setuid-sandbox',
+        //         '--no-sandbox', 
+        //         '--single-process',
+        //         '--no-zygote',
+        //     ],
+        //     executablePath: process.env.NODE_ENV === "production" ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),            
+        // });
+        // const page = await browser.newPage();
+        // await page.goto(url);
+        // const htmlContent = await page.content();
+        // const $ = cheerio.load(htmlContent);
+
+        // test moi ca 2 moi truong
+        let browser;
+
+        if (process.env.NODE_ENV === 'production') {
+            // Puppeteer launch configuration for production (e.g., Docker)
+            browser = await puppeteer.launch({
+                args: [
+                    '--disable-setuid-sandbox',
+                    '--no-sandbox', 
+                    '--single-process',
+                    '--no-zygote',
+                ],
+                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+            });
+        } else {
+            // Simplified Puppeteer launch configuration for local development
+            browser = await puppeteer.launch();
+        }
+
         const page = await browser.newPage();
         await page.goto(url);
         const htmlContent = await page.content();
         const $ = cheerio.load(htmlContent);
 
-        
 
         const data = [];
 
@@ -108,13 +132,14 @@ async function crawlData() {
             });
             data.push(rowData);
         });
+
         await browser.close();
         console.log('Final Conference Data:', data);
         return data;
     } catch (error) {
         console.error('Error while crawling data:', error);
         throw error;
-    }
+    } 
 }
 
 async function saveDataToDatabase(data) {
