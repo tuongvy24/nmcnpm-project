@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Conference.belongsTo(models.Weblist, { foreignKey: "weblist_id" });
+      Conference.belongsTo(models.User, { foreignKey: "userId" });
      
     }
   }

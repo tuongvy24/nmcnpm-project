@@ -70,5 +70,7 @@ app.get('/', (req, res) => {
 });
 app.use('/home', require('./routes/crawlersRouter'))
 app.use('/weblists', require('./routes/blogsRouter'));
+app.use("/users", require("./routes/userRouter"));
+
 
 app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))

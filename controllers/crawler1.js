@@ -8,13 +8,6 @@ const cheerio = require('cheerio');
 // const moment = require('moment');
 const moment = require('moment-timezone');
 
-// const pool = new Pool({
-//     user: 'postgres',
-//     host: '127.0.0.1',
-//     database: 'CrawlerConDB',
-//     password: 'PhucTony',
-//     port: 5432,
-// });
 const pool = new Pool({
     user: 'nmcnpmprojectdb', 
     host: 'dpg-cpc9bke3e1ms739i77lg-a.singapore-postgres.render.com',    
@@ -42,22 +35,6 @@ async function crawlData() {
         // const htmlContent = await page.content();
         // const $ = cheerio.load(htmlContent);
         
-
-
-         // Khởi chạy Puppeteer với các tham số bổ sung để tránh các vấn đề liên quan đến sandbox
-        // const browser = await puppeteer.launch({
-        //     args: [
-        //         '--disable-setuid-sandbox',
-        //         '--no-sandbox', 
-        //         '--single-process',
-        //         '--no-zygote',
-        //     ],
-        //     executablePath: process.env.NODE_ENV === "production" ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath(),            
-        // });
-        // const page = await browser.newPage();
-        // await page.goto(url);
-        // const htmlContent = await page.content();
-        // const $ = cheerio.load(htmlContent);
 
         // test moi ca 2 moi truong
         let browser;

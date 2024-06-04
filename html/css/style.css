@@ -1097,6 +1097,12 @@ ol {
 	font-weight: 700;
 }
 
+.breadcrumb__text h3 {
+	font-size: 30px;
+	color: #e27e26;
+	font-weight: 700;
+}
+
 .breadcrumb__option a {
 	display: inline-block;
 	font-size: 20px;

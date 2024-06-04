@@ -1,26 +1,21 @@
-<div class="blog__sidebar">
-    <div class="blog__sidebar__search">
-        <form action="/blogs">
-            <input type="text" placeholder="Search..." name="keyword">
-            <button type="submit"><span class="icon_search"></span></button>
-        </form>
-    </div>
-    <div class="blog__sidebar__item">
-        <h4>Categories</h4>
-        <ul>
-            <li><a href="/blogs">All</a></li>
-            {{#each categories}}
-            <li><a href="/blogs?category={{id}}">{{name}} ({{Blogs.length}})</a></li>
-            {{/each}}
-        </ul>
-    </div>
-
-    <div class="blog__sidebar__item">
-        <h4>Search By Tags</h4>
-        <div class="blog__sidebar__item__tags">
-            {{#each tags}}
-            <a href="/blogs?tag={{id}}">{{name}}</a>
-            {{/each}}
+<div class="col-lg-4 col-md-5">
+    <div class="blog__sidebar">
+        <div class="blog__sidebar__search">
+            <form action="/weblists" method="get">
+                <input type="text" placeholder="Search..." name="keyword">
+                <button type="submit"><span class="icon_search"></span></button>
+            </form>
         </div>
+        <div class="blog__sidebar__item">
+            <h4>Web Categories</h4>
+            <ul>
+                <li><a href="/weblists">All</a></li>
+                {{#each weblists}}
+                <li><a href="/weblists?id={{id}}">{{web_name}} ({{Conferences.length}})</a></li>
+                {{/each}}
+                
+            </ul>
+        </div>
+    
     </div>
 </div>
