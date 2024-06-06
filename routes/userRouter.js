@@ -8,4 +8,8 @@ router.post('/', controller.addUser)
 router.delete('/:id', controller.deleteUser);
 router.put('/', controller.editUser)
 
+
+router.get('/my-account', (req, res) => {
+    res.render('my-account');
+});
 module.exports = router;

@@ -5,7 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     const items = [
       {
-        username: "admin@mail.com",
+        email: "admin@mail.com",
         password: "AXI3CxWdu",
         firstName: "Enrico",
         lastName: "De Ferraris",
@@ -14,7 +14,7 @@ module.exports = {
         isAdmin: true,
       },
       {
-        username: "lcarlick1@furl.net",
+        email: "lcarlick1@furl.net",
         password: "kUzhyPDAB",
         firstName: "Lisle",
         lastName: "Carlick",
@@ -22,7 +22,7 @@ module.exports = {
         imagePath: "/img/blog/details/details-author.jpg",
       },
       {
-        username: "fochiltree2@nytimes.com",
+        email: "fochiltree2@nytimes.com",
         password: "x1Q3NnKVg5oB",
         firstName: "Frederich",
         lastName: "Ochiltree",

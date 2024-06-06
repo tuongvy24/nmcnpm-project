@@ -100,6 +100,30 @@
                             <a href="/">Home</a>                            
                             <a href="/weblists">Weblists</a>
                             <a href="/users">Users</a>
+                            <div>
+                                {{!-- Kiem tra Login isLoggedIn --}}
+                                    {{#if isLoggedIn}}
+                                    <div class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account</a>
+                                        <div class="dropdown-menu">
+                                            <a href="/users/my-account" class="dropdown-item">Profile</a>
+                                            <a href="/users/wishlist" class="dropdown-item">Wishlist</a>
+                                            <a href="/users/logout" class="dropdown-item">Logout</a>
+                                        </div>
+                                    </div>
+                                    {{else}}
+                                    {{!-- neu CHUA login --}}
+                                    <div class="dropdown">
+                                        <a href="/users/login">Login or Registor</a>
+                                    </div>
+                                    {{/if}}
+                                    {{!-- end if --}}                                
+                            </div>
+                                                       
+                               
+                           
+
+
                         </div>
                     </div>
                 </div>

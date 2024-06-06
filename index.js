@@ -6,10 +6,14 @@ const app = express();
 const port = process.env.PORT || 3000;
 const expressHandlebars = require('express-handlebars');
 const session = require('express-session');
-const flash = require('connect-flash');
 
 const { createPagination } = require('express-handlebars-paginate');
 const models = require('./models')
+
+
+// khai bao passport
+const passport = require('./controllers/passport');
+const flash = require('connect-flash');
 
 // cau hinh public static folder
 app.use(express.static(__dirname + '/html'));
@@ -61,15 +65,35 @@ app.use(session({
 //   }
 }));
 
+
+//cau hinh su dung passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 //su dung connect-flash
 app.use(flash());
 
+// 
+//middleware khoi tao gio hang
+// luu thong tin gio hang qua cac trang
+app.use((req, res, next) => {
+    // let Cart = require('./controllers/cart');
+    // req.session.cart = new Cart(req.session.cart ? req.session.cart : {});
+    // res.locals.quantity = req.session.cart.quantity;
+    // nguoi dung da dang nhap chua 
+    res.locals.isLoggedIn = req.isAuthenticated();
+  
+    next();
+});
+
+  
 app.get('/', (req, res) => {
     res.redirect('/home')
     // res.render('index');
 });
 app.use('/home', require('./routes/crawlersRouter'))
 app.use('/weblists', require('./routes/blogsRouter'));
+app.use("/users", require("./routes/authRouter")); // xac thuc nguoi dung truoc
 app.use("/users", require("./routes/userRouter"));
 
 

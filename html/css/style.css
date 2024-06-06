@@ -3549,7 +3549,7 @@ ul.blog__pagination li.active {
 
 .product__pagination a:hover,
 .blog__pagination a:hover {
-	background: blue;
+	background: rgb(37, 37, 191);
 	border-color: blue;
 	color: #ffffff;
 }
