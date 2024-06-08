@@ -1112,12 +1112,12 @@ ol {
 	position: relative;
 }
 
-.breadcrumb__option a:after {
+.breadcrumb__option a:before {
 	position: absolute;
 	right: -12px;
-	top: 13px;
-	height: 1px;
-	width: 10px;
+	top: 3px;
+	height: 20px;
+	width: 2px;
 	background: #ffffff;
 	content: "";
 }

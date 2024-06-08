@@ -44,7 +44,7 @@ function showUserData(e) {
   document.querySelector("#id").value = e.target.dataset.id;
   document.querySelector("#firstNameEdit").value = e.target.dataset.firstName;
   document.querySelector("#lastNameEdit").value = e.target.dataset.lastName;
-  document.querySelector("#usernameEdit").value = e.target.dataset.username;
+  document.querySelector("#emailEdit").value = e.target.dataset.email;
   document.querySelector("#mobileEdit").value = e.target.dataset.mobile;
   document.querySelector("#isAdminEdit").checked = e.target.dataset.isAdmin == "true" ? true : false;
 
