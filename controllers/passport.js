@@ -61,7 +61,7 @@ passport.use('local-login', new LocalStrategy({
     }
 }));
 
-
+// ham dang ky tai khoan register
 passport.use('local-register', new LocalStrategy({
     usernameField: 'email', //ten dnhap la email
     passwordField: 'password',
@@ -70,7 +70,7 @@ passport.use('local-register', new LocalStrategy({
     if (email) {
         email = email.toLowerCase(); //chuyen dc email
     }
-    if (req.user) { //neu nguoi dung da dang nhap thi bo qua
+    if (req.user) { //neu nguoi dung da dang nhap thi bo qua, o day dung email
         return done(null, req.user);
     }
     try {
@@ -78,11 +78,10 @@ passport.use('local-register', new LocalStrategy({
         let user = await models.User.findOne({ where: { email }});
         
         
-        if (user) { //neu email co ton tai roi registerMessage         
-
+        if (user) { //neu email co ton tai roi registerMessage  
             return done(null, false, req.flash('registerMessage', 'Email is already taken!'));
         }
-        // neu email chua dang ky
+        // neu email chua dang ky, thi lay gia tri tu nguoi dung nhap vao, luu db
         user = await models.User.create({
             email: email,
             password: bcrypt.hashSync(password, bcrypt.genSaltSync(8)),

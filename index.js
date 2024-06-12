@@ -48,10 +48,6 @@ app.set('view engine', 'hbs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// app.get('/', (req, res) => {
-//   res.send('GET request to the homepage')
-// })
-
 //cau hinh su dung session cho gio hang
 app.use(session({
   secret: process.env.SESSION_SECRET,

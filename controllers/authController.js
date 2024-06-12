@@ -29,22 +29,18 @@ controller.login = (req, res, next) => {
         // Chuyen sang users/my-account
         req.logIn(user, (error) => {
             if (error) { return next(error); }
-            req.session.cookie.maxAge = keepSignedIn ? (24 * 60 * 60 * 1000) : null;
-            // luu gio hang lai
-            // req.session.cart = cart;
-            // return res.redirect('/users/my-account');
+            req.session.cookie.maxAge = keepSignedIn ? (24 * 60 * 60 * 1000) : null;           
             return res.redirect(reqUrl);
         });
     })(req, res, next);
 }
 
-controller.logout = (req, res, next) => {
-    let cart = req.session.cart;
+controller.logout = (req, res, next) => {    
     // dung logout cua passport
     req.logout((error) => {
         if (error) { return next(error); }
          // luu gio hang lai
-        req.session.cart = cart;
+        // req.session.cart = cart;
         // neu thanh cong tra ve trang chu
         res.redirect('/')
     })
@@ -57,6 +53,7 @@ controller.isLoggedIn = (req, res, next) => {
     // neu chua dang nhap
     res.redirect(`/users/login?reqUrl=${req.originalUrl}`);
 }
+
 // local-register
 controller.register = (req, res, next) => {
     let reqUrl = req.body.reqUrl ? req.body.reqUrl : '/users/my-account';
@@ -92,23 +89,24 @@ controller.forgotPassword = async (req, res) => {
     // kt email ton tai
     let user = await models.User.findOne({ where: { email }});
     if (user) {
-        // tao link
-        const { sign } = require('./jwt');
-        const host = req.header('host');
-        const resetLink = `${req.protocol}://${host}/users/reset?token=${sign(email)}&email=${email}`;
-        // gui mail
-        const { sendForgotPasswordMail } = require('./mail');
-        sendForgotPasswordMail(user, host, resetLink)
-            .then((result) => { //neu thong bao thanh cong
-                console.log('email has been sent');
-                return res.render('forgot-password', { done: true });
-            })
-            .catch(error => {
-                console.log(error.statusCode);
-                return res.render('forgot-password', { message: 'An error has occured when sending to your email. Please check your email account!' });
-            }) 
+        // // tao link
+        // const { sign } = require('./jwt');
+        // const host = req.header('host');
+        // const resetLink = `${req.protocol}://${host}/users/reset?token=${sign(email)}&email=${email}`;
+        // // gui mail
+        // const { sendForgotPasswordMail } = require('./mail');
+        // sendForgotPasswordMail(user, host, resetLink)
+        //     .then((result) => { //neu thong bao thanh cong
+        //         console.log('email has been sent');
+        //         return res.render('forgot-password', { done: true });
+        //     })
+        //     .catch(error => {
+        //         console.log(error.statusCode);
+        //         return res.render('forgot-password', { message: 'An error has occured when sending to your email. Please check your email account!' });
+        //     }) 
+
         // tb thanh cong
-        // return res.render('forgot-password', { done: true });
+        return res.render('forgot-password', { done: true });
     } else {
          // nguoc lai tb  email ko ton tai
         return res.render('forgot-password', { message: 'Email does not exist!' });

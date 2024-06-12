@@ -16,7 +16,7 @@
 <!-- Login Start -->
 <div class="login">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header" style="text-align: center;">
             <h3>User Registration & Login</h3>
             <p>
                 Trang nay dung de login hoac register nhe!!!
@@ -55,6 +55,7 @@
                                 {{/if}}
                                 {{!-- end if --}}
                                 <input type="hidden" name="reqUrl" value="{{reqUrl}}">
+                                {{!-- link forget password nhe!!! --}}
                                 <div class="col-md-12 py-3">
                                     <a href="/users/forgot">Forgot password</a>
                                 </div>
@@ -100,12 +101,13 @@
                             </div>
 
                             {{!-- neu co thong tin register --}}
+                            {{!-- dung flash dua ra --}}
                             {{#if registerMessage}}
                             <div class="col-md-12">
                                 <div class="p-3 mt-3 alert alert-warning">{{{registerMessage}}}</div>                            
                             </div>
                             {{/if}}
-                                              {{!-- het if --}}
+                            {{!-- het if --}}
                             <input type="hidden" name="reqUrl" value="{{reqUrl}}">
                         </div>
                     </div>
