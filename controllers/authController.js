@@ -89,24 +89,25 @@ controller.forgotPassword = async (req, res) => {
     // kt email ton tai
     let user = await models.User.findOne({ where: { email }});
     if (user) {
-        // // tao link
-        // const { sign } = require('./jwt');
-        // const host = req.header('host');
-        // const resetLink = `${req.protocol}://${host}/users/reset?token=${sign(email)}&email=${email}`;
-        // // gui mail
-        // const { sendForgotPasswordMail } = require('./mail');
-        // sendForgotPasswordMail(user, host, resetLink)
-        //     .then((result) => { //neu thong bao thanh cong
-        //         console.log('email has been sent');
-        //         return res.render('forgot-password', { done: true });
-        //     })
-        //     .catch(error => {
-        //         console.log(error.statusCode);
-        //         return res.render('forgot-password', { message: 'An error has occured when sending to your email. Please check your email account!' });
-        //     }) 
+        // tao link
+        const { sign } = require('./jwt'); //lay ham sign tu jwt
+        const host = req.header('host');
+        const resetLink = `${req.protocol}://${host}/users/reset?token=${sign(email)}&email=${email}`;
+        
+        // gui mail
+        const { sendForgotPasswordMail } = require('./mail');
+        sendForgotPasswordMail(user, host, resetLink)
+            .then((result) => { //neu thong bao thanh cong
+                console.log('email has been sent');
+                return res.render('forgot-password', { done: true });
+            })
+            .catch(error => {
+                console.log(error.statusCode);
+                return res.render('forgot-password', { message: 'An error has occured when sending to your email. Please check your email account!' });
+            }) 
 
         // tb thanh cong
-        return res.render('forgot-password', { done: true });
+        // return res.render('forgot-password', { done: true });
     } else {
          // nguoc lai tb  email ko ton tai
         return res.render('forgot-password', { message: 'Email does not exist!' });
