@@ -1,7 +1,7 @@
 'use strict'
 const express = require('express')
 const router = express.Router();
-const controller = require('../controllers/blogsController');
+const controller = require('../controllers/websController');
 
 router.use(controller.init);
 router.get('/', controller.viewList);

@@ -3,43 +3,28 @@
 const controller ={}
 const models = require('../models')
 const sequelize = require('sequelize')
-const Op = sequelize.Op;
-// const { crawlData, saveDataToDatabase } = require('./crawler2');
-
-controller.init = async (req, res, next) => {
-      // lay categories dua ra view
-    // let categories = await models.Category.findAll({
-
-    //     include: [{ model: models.Blog }]
-    // })
-    // res.locals.categories = categories;
-
-    // let categories = await models.Category.findAll({
-    //     include: [{ model: models.Blog}]
-    // });
-    // res.locals.categories = categories;
-
-      // lay tags dua ra view
-    // let tags = await models.Tag.findAll()
-    // res.locals.tags = tags;
+const Op = sequelize.Op; 
+const lastCrawlResults = require('./cronJobs'); // Import kết quả từ cron job
 
 
-    // // let tags = await models.Tag.findAll();
-    // // res.locals.tags = tags;
-    // next();
-}
 
+// view ds web o combo box the select trang index
 controller.viewList = async (req, res) => {      
 
     let weblists = await models.Weblist.findAll({
         include: [{ model: models.Conference }]
     })
     res.locals.weblists = weblists;
-    // console.log('weblist: ', weblists)
+    res.locals.crawlResults = lastCrawlResults; // Truyền kết quả vào view
+    // req.io.emit('crawlResultsUpdated', lastCrawlResults);
+
+    console.log('Controller: -----lastCrawlResults: ', lastCrawlResults)
+
+
     const successMessage = req.flash('success')
-    res.render('crawler', { successMessage: successMessage });
-    // res.render('index');
-    // res.send('to homepage')
+    const errorMessage = req.flash('error');
+    res.render('index', { successMessage: successMessage, errorMessage: errorMessage });
+    // res.render('index', { successMessage: successMessage });   
 }
 
 // Middleware để xóa req.flash sau mỗi lần submit
@@ -48,6 +33,7 @@ const clearFlash = (req, res) => {
     // next(); // Chuyển tiếp để xử lý các yêu cầu tiếp theo
 };
 
+// dung de crawl du lieu hoi nghi tu cac trang web 
 controller.addWeblist = async (req, res) => {
     const selectedWebsite = req.body.selectedWebsite;
     let crawlData, saveDataToDatabase; // Di chuyển khai báo ra ngoài khối switch
@@ -87,9 +73,7 @@ controller.addWeblist = async (req, res) => {
             insertedCount = await saveDataToDatabase(data);
 
             console.log(`in ProcessData() Data CONTROLLER has been saved to the database successfully. ${insertedCount}`);
-
             // req.flash('success', `Da them du lieu thanh cong nhe! so hang duoc them moi: ${insertedCount}`);
-
 
         } catch (error) {
             console.error('Error while processing data:', error);
@@ -100,12 +84,9 @@ controller.addWeblist = async (req, res) => {
    
     await processData();
     
-    console.log(`OUT so hang them vao CONTROLLER: ${insertedCount}`)
+    // console.log(`OUT so hang them vao CONTROLLER: ${insertedCount}`)
     req.flash('success', `Da them du lieu thanh cong nhe! so hang duoc them moi: ${insertedCount}`)
     await clearFlash(req, res); // Gọi middleware để xóa req.flash
-    // res.redirect('/home')
-        
-
     res.redirect('/home');
 
 }

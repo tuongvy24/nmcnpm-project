@@ -10,6 +10,7 @@ document
     document.querySelector("#firstName").focus();
   });
 
+  // Duyệt qua tất cả các nút xóa và thêm một sự kiện click cho mỗi nút.
 document.querySelectorAll(".delete-btn").forEach((btnConfirm) => {
   btnConfirm.addEventListener("click", (e) => {
     let id = e.target.dataset.id;
@@ -41,7 +42,11 @@ async function deleteUser(id) {
 }
 
 function showUserData(e) {
+  // e.target.dataset.id: Lấy giá trị của data-id từ phần tử được nhấp
+  // cac gia tri nay duoc luu san o " <i role="button" class="bx bx-edit-alt text-info me-3""
   document.querySelector("#id").value = e.target.dataset.id;
+  // e.target.dataset.firstName: Lấy giá trị của data-first-name.
+  // Gán giá trị cho trường nhập liệu có id là firstNameEdit cua FormEdit nhe
   document.querySelector("#firstNameEdit").value = e.target.dataset.firstName;
   document.querySelector("#lastNameEdit").value = e.target.dataset.lastName;
   document.querySelector("#emailEdit").value = e.target.dataset.email;
@@ -55,7 +60,7 @@ async function editUser(e) {
   e.preventDefault();
   let formData = new FormData(document.querySelector('#editUserForm'));
   let data = Object.fromEntries(formData.entries());
-  console.log(data);
+  // console.log(data);
 
   let res = await fetch(`/users`, {
     method: 'PUT',

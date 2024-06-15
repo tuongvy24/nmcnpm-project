@@ -91,6 +91,10 @@ async function crawlData() {
         //     console.log('Website:', conference.website);
         //     console.log('-----------------------------------');
         // });
+
+        console.log('Craler3: Final Conference Data:');
+        console.log('Craler3: Final Conference Data:');
+        console.log('Craler3: Final Conference Data:', conferences);
        
         return conferences;
     } catch (error) {

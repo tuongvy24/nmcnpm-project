@@ -1,0 +1,61 @@
+{{> sidebar }}
+
+<div class="col-lg-8 col-md-7">
+  <div class="row">    
+    <div class="col-lg-12">
+      <h2 class="mb-4">Data Crawler</h2>
+      <form id="crawlerForm" method="post" action="/home">
+        <div class="form-group">
+          <label for="websiteSelect">Chọn trang web cần crawler:</label> <br>
+          <select class="form-control" id="websiteSelect" name="selectedWebsite">
+            {{#each weblists}}
+            <option value="{{id}}">{{web_name}}</option>
+            {{/each}}
+          </select> <br>
+        </div> <br>
+        <button type="submit" class="btn btn-primary">Submit</button><br>
+        {{#if successMessage}}
+        <div class="alert alert-primary">{{successMessage}}</div>
+        {{else}}
+        <div class="alert alert-danger">{{error}}</div>
+        {{/if}}
+        
+        <h3>Cron Job Results</h3>
+        <div>
+          <h4>Crawler 1:</h4>
+          <p id="crawler1-result">{{crawlResults.crawler1}}</p>
+          <h4>Crawler 2:</h4>
+          <p id="crawler2-result">{{crawlResults.crawler2}}</p>
+          <h4>Crawler 3:</h4>
+          <p id="crawler3-result">{{crawlResults.crawler3}}</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Include Socket.IO library -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    // Connect to Socket.IO server
+    const socket = io();
+    console.log('Connecting to Socket.IO...');
+
+    // Listen for connect event from the server
+    socket.on('connect', () => {
+        console.log('Connected to Socket.IO server');
+    });
+
+    // Listen for crawlResultsUpdated event from the server
+    socket.on('crawlResultsUpdated', (data) => {
+        console.log('Crawl results updated', data);
+        document.getElementById('crawler1-result').textContent = data.crawler1;
+        document.getElementById('crawler2-result').textContent = data.crawler2;
+        document.getElementById('crawler3-result').textContent = data.crawler3;
+    });
+
+    // Listen for disconnect event from the server
+    socket.on('disconnect', () => {
+        console.log('Disconnected from Socket.IO server');
+    });
+</script>

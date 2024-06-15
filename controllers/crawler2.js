@@ -32,7 +32,13 @@ const url = 'https://www.lix.polytechnique.fr/~hermann/conf.php';
 async function crawlData() {
   try {
     // Sử dụng thư viện axios để tải nội dung HTML của trang web
-    const response = await axios.get(url);
+    // const response = await axios.get(url);
+    const response = await axios.get(url, {
+        timeout: 50000, // Timeout 50 giây
+        headers: {
+            'User-Agent': 'Your User Agent' // Thêm user-agent để giả mạo là trình duyệt khi gửi yêu cầu
+        }
+    });
     const $ = cheerio.load(response.data);
     
     const conferenceData = [];
@@ -71,11 +77,24 @@ async function crawlData() {
     });
 
     // debug data
-    console.log('Final Conference Data:', conferenceData);
+    
+    console.log('Craler2: Final Conference Data:');
+    console.log('Craler2: Final Conference Data:');
+    console.log('Craler2: Final Conference Data:', conferenceData);
     return conferenceData; // Trả về dữ liệu
 
   } catch (error) {
-    console.log('Đã có lỗi khi tải trang web:', error);
+    // console.log('Đã có lỗi khi tải trang web:', error);
+    // return []; // Trả về mảng rỗng nếu có lỗi
+    if (axios.isAxiosError(error)) {
+        if (error.code === 'ETIMEDOUT') {
+            console.error('Timeout khi kết nối đến server.');
+        } else {
+            console.error('Lỗi kết nối:', error.message);
+        }
+    } else {
+        console.error('Lỗi khác:', error.message);
+    }
     return []; // Trả về mảng rỗng nếu có lỗi
   }
 }

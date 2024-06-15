@@ -5,7 +5,6 @@ const puppeteer = require('puppeteer');
 require("dotenv").config();
 const axios = require('axios');
 const cheerio = require('cheerio');
-// const moment = require('moment');
 const moment = require('moment-timezone');
 
 const pool = new Pool({
@@ -21,8 +20,6 @@ const pool = new Pool({
     idleTimeoutMillis: 30000       // Increase idle timeout as needed
 });
 
-// Biến toàn cục để lưu trữ số hàng đã được chèn vào cơ sở dữ liệu
-// let insertedCount = 0;
 
 async function crawlData() {
     try {        
@@ -111,7 +108,9 @@ async function crawlData() {
         });
 
         await browser.close();
-        console.log('Final Conference Data:', data);
+        console.log('Craler1: Final Conference Data:');
+        console.log('Craler1: Final Conference Data:');
+        console.log('Craler1: Final Conference Data:', data);
         return data;
     } catch (error) {
         console.error('Error while crawling data:', error);

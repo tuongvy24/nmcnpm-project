@@ -38,9 +38,7 @@ controller.login = (req, res, next) => {
 controller.logout = (req, res, next) => {    
     // dung logout cua passport
     req.logout((error) => {
-        if (error) { return next(error); }
-         // luu gio hang lai
-        // req.session.cart = cart;
+        if (error) { return next(error); }     
         // neu thanh cong tra ve trang chu
         res.redirect('/')
     })
@@ -69,9 +67,6 @@ controller.register = (req, res, next) => {
         // Chuyen sang users/my-account
         req.logIn(user, (error) => {
             if (error) { return next(error); }
-            // req.session.cookie.maxAge = keepSignedIn ? (24 * 60 * 60 * 1000) : null;
-            // luu gio hang lai
-            req.session.cart = cart;
             // return res.redirect('/users/my-account');
             return res.redirect(reqUrl);
         });
@@ -131,7 +126,7 @@ controller.resetPassword = async (req, res) => {
     let email = req.body.email;
     let token = req.body.token;
     let bcrypt = require('bcrypt');
-    let password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8));
+    let password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8)); //truyen vao va ma hoa mk
 
     await models.User.update({ password }, { where: { email }});
     res.render('reset-password', { done: true });

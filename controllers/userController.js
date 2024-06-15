@@ -4,34 +4,20 @@ const sequelize = require('sequelize');
 const Op = sequelize.Op;
 
 
-controller.init = async (req, res, next) => {
-  // lay categories dua ra view
-  let weblists = await models.Weblist.findAll({
-    include: [{ model: models.Conference }]
-  })
-  res.locals.weblists = weblists;
+// controller.init = async (req, res, next) => {
+//   // lay categories dua ra view
+//   let weblists = await models.Weblist.findAll({
+//     include: [{ model: models.Conference }]
+//   })
+//   res.locals.weblists = weblists;
 
-  next();
-}
+//   next();
+// }
 
 controller.show = async (req, res) => {
-  // res.locals.users = await models.User.findAll({
-  //   attributes: [
-  //     "id",
-  //     "imagePath",
-  //     "email",
-  //     "firstName",
-  //     "lastName",
-  //     "mobile",
-  //     "isAdmin",
-  //   ],
-  //   // order: [["createdAt", "DESC"]],
-  //   // mac dinh ASC
-  // });
-
   // chuc nang tim kiem
   let keyword = req.query.keyword || '';
-  console.log(`keyword: ${keyword}`)
+  // console.log(`keyword: ${keyword}`)
   let options = {
       // attributes: ['id', 'title', 'description', 'imagePath', 'summary', 'createdAt'],
       // include: [{model: models.Comment }],

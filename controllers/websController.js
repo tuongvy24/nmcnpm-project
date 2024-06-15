@@ -113,7 +113,7 @@ controller.viewList = async (req, res) => {
     // res.locals.blogs = selectedBlogs;
     res.locals.conferences = selectedCons;
 
-    res.render('index');
+    res.render('weblists-con');
     // res.send('to homepage')
 }
 

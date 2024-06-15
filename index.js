@@ -10,6 +10,14 @@ const session = require('express-session');
 const { createPagination } = require('express-handlebars-paginate');
 const models = require('./models')
 
+// cronJbos de lay du lieu dinh ky
+const cronJobs = require('./controllers/cronJobs'); // Import the cron jobs
+// socket.io de cap nhat du lieu realtime
+const http = require('http');
+const socketIo = require('socket.io');
+const server = http.createServer(app);
+const io = socketIo(server); // Initialize Socket.IO server
+
 
 // khai bao passport
 const passport = require('./controllers/passport');
@@ -26,7 +34,7 @@ app.engine('hbs', expressHandlebars.engine({
     extname: 'hbs',
     defaultLayout: 'layout',
     runtimeOptions: {
-         // bo sung de lay brand len view
+        // bo sung de lay brand len view
         allowProtoPropertiesByDefault: true
     }, 
     helpers: {
@@ -51,14 +59,8 @@ app.use(express.urlencoded({ extended: false }));
 //cau hinh su dung session cho gio hang
 app.use(session({
   secret: process.env.SESSION_SECRET,
-//   secret: process.env.SESSION_SECRET,
-//   store: new redisStore({ client: redisClient }), //dung redis
   resave: false,
   saveUninitialized: false,
-//   cookie: {
-//     httpOnly: true,
-//     maxAge: 20 * 60 * 1000 //thoi gian ton tai 20 phut
-//   }
 }));
 
 
@@ -72,25 +74,52 @@ app.use(flash());
 // 
 //middleware khoi tao gio hang
 // luu thong tin gio hang qua cac trang
-app.use((req, res, next) => {
-    // let Cart = require('./controllers/cart');
-    // req.session.cart = new Cart(req.session.cart ? req.session.cart : {});
-    // res.locals.quantity = req.session.cart.quantity;
+app.use((req, res, next) => {    
     // nguoi dung da dang nhap chua 
-    res.locals.isLoggedIn = req.isAuthenticated();
-  
+    res.locals.isLoggedIn = req.isAuthenticated();  
     next();
 });
 
+
+
+
+
+global.io = io; // Make io available globally
+
+
   
 app.get('/', (req, res) => {
-    res.redirect('/home')
-    // res.render('index');
+    res.redirect('/home')   
 });
+
+
+
+
+// Serve socket.io.js from node_modules/socket.io/client-dist
+app.get('/socket.io/socket.io.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'node_modules', 'socket.io', 'client-dist', 'socket.io.js'));
+});
+
+
+// Set up the Socket.IO connection
+io.on('connection', (socket) => {
+    console.log('A user connected');
+    socket.emit('crawlResultsUpdated', lastCrawlResults); // Send initial crawl results when a user connects
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
+});
+
+
+
+
+
 app.use('/home', require('./routes/crawlersRouter'))
-app.use('/weblists', require('./routes/blogsRouter'));
+app.use('/weblists', require('./routes/websRouter')); //ds hoi nghi
 app.use("/users", require("./routes/authRouter")); // xac thuc nguoi dung truoc
-app.use("/users", require("./routes/userRouter"));
+app.use("/users", require("./routes/userRouter")); // them xoa sua thong tin user
 
 
 app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
+
