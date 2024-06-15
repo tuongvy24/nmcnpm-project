@@ -7,8 +7,8 @@ function checkPasswordConfirm(formId) {
   
     if (password.value != confirmPassword.value) {
         confirmPassword.setCustomValidity('Passwords not match!');
-        confirmPassword.reportValidity();
+        confirmPassword.reportValidity(); //hien thi thong bao loi
     } else {
-        confirmPassword.setCustomValidity('');
+        confirmPassword.setCustomValidity(''); //xoa thong bao loi
     }
   }

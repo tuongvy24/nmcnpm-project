@@ -28,7 +28,7 @@ passport.deserializeUser(async (id, done) => {
 passport.use('local-login', new LocalStrategy({
     usernameField: 'email', //ten dnhap la email
     passwordField: 'password',
-    passReqToCallback: true // cho phep truyen req vao call back de ktra user da dang nhap chua
+    passReqToCallback: true // cho phep truyen req vao callback de ktra user da dang nhap chua
 }, async (req, email, password, done) => {
     if (email) { //neu co nhap email
         email = email.toLowerCase(); //chuyen dc email

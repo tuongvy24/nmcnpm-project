@@ -71,49 +71,15 @@ app.use(passport.session());
 //su dung connect-flash
 app.use(flash());
 
-// 
-//middleware khoi tao gio hang
-// luu thong tin gio hang qua cac trang
 app.use((req, res, next) => {    
     // nguoi dung da dang nhap chua 
     res.locals.isLoggedIn = req.isAuthenticated();  
     next();
 });
-
-
-
-
-
-global.io = io; // Make io available globally
-
-
   
 app.get('/', (req, res) => {
     res.redirect('/home')   
 });
-
-
-
-
-// Serve socket.io.js from node_modules/socket.io/client-dist
-app.get('/socket.io/socket.io.js', (req, res) => {
-    res.sendFile(path.join(__dirname, 'node_modules', 'socket.io', 'client-dist', 'socket.io.js'));
-});
-
-
-// Set up the Socket.IO connection
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    socket.emit('crawlResultsUpdated', lastCrawlResults); // Send initial crawl results when a user connects
-
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
-});
-
-
-
-
 
 app.use('/home', require('./routes/crawlersRouter'))
 app.use('/weblists', require('./routes/websRouter')); //ds hoi nghi

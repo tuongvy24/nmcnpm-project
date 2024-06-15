@@ -5,14 +5,19 @@ const controller = {};
 const passport = require('./passport');
 const models = require('../models');
 
+// goi ham show khi vao login
 controller.show = (req, res) => {
+    // neu dang nhap roi, thi ko thien thi form Login nua
     if (req.isAuthenticated()) {
         return res.redirect('/');
     }
+    // neu chua dang nhap
     res.render('login', { loginMessage: req.flash('loginMessage'), reqUrl: req.query.reqUrl, registerMessage: req.flash('registerMessage') });
     // res.render('login');
 }
 
+// goi ham login sau khi post thong tin tu form login
+// co ca reqUrl
 controller.login = (req, res, next) => {
     let keepSignedIn = req.body.keepSignedIn;
     let reqUrl = req.body.reqUrl ? req.body.reqUrl : '/users/my-account';
@@ -22,13 +27,14 @@ controller.login = (req, res, next) => {
         if (error) {
             return next(error);
         }
-        if (!user) { //nguoi dung chua dang nhap duoc
+        if (!user) { //nguoi dung chua dang nhap duoc, van giu trang cu
             return res.redirect(`/users/login?reqUrl=${reqUrl}`);
         } 
         //neu DANG NHAP THANH CONG
         // Chuyen sang users/my-account
         req.logIn(user, (error) => {
             if (error) { return next(error); }
+            // luu session 24 gio neu dung keepSignIn
             req.session.cookie.maxAge = keepSignedIn ? (24 * 60 * 60 * 1000) : null;           
             return res.redirect(reqUrl);
         });
@@ -44,6 +50,7 @@ controller.logout = (req, res, next) => {
     })
 }
 
+// middleware kiem tra login chua?
 controller.isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
@@ -55,7 +62,7 @@ controller.isLoggedIn = (req, res, next) => {
 // local-register
 controller.register = (req, res, next) => {
     let reqUrl = req.body.reqUrl ? req.body.reqUrl : '/users/my-account';
-    let cart = req.session.cart;
+     
     passport.authenticate('local-register', (error, user) => {
         if (error) {
             return next(error);
@@ -113,7 +120,7 @@ controller.showResetPassword = (req, res) => {
     let email = req.query.email;
     let token = req.query.token;
     let { verify } = require('./jwt');
-    if(!token || !verify(token)) {
+    if(!token || !verify(token)) { //neu tonken ko co hay ko hop le
         return res.render('reset-password', { expired: true });
     } else {
         return res.render('reset-password', { email, token });
