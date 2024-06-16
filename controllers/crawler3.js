@@ -87,9 +87,9 @@ async function crawlData() {
         //     console.log('-----------------------------------');
         // });
 
-        console.log('Craler3: Final Conference Data:');
-        console.log('Craler3: Final Conference Data:');
-        console.log('Craler3: Final Conference Data:', conferences);
+        // console.log('Craler3: Final Conference Data:');
+        // console.log('Craler3: Final Conference Data:');
+        // console.log('Craler3: Final Conference Data:', conferences);
        
         return conferences;
     } catch (error) {

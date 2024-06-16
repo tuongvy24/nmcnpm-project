@@ -22,6 +22,14 @@ async function processCrawl(crawler, key) {
         lastCrawlResults[key] = `CronJobs.js: Data has been saved successfully. Inserted rows: ${insertedCount}`;
         console.log('CronJobs.js: lastCrawlResults[key]: ', lastCrawlResults[key]);
 
+        if (global.io) {
+            console.log('cronJobs.js: Emitting updated crawl results via Socket.IO');            
+            global.io.emit('crawlResultsUpdated', lastCrawlResults);
+            console.log('cronJobs.js: Emission successful');
+        }
+
+        //// Emit updated crawl results via Socket.IO
+       
          // Send email notification
          const subject = `Crawler ${key} Results`;
          const htmlContent = `<p>${lastCrawlResults[key]}</p>`;
@@ -29,6 +37,13 @@ async function processCrawl(crawler, key) {
     } catch (error) {
         lastCrawlResults[key] = `CronJobs.js: Error while processing data: ${error.message}`;
         console.error(lastCrawlResults[key]);
+
+        // Emit updated crawl results (including error message) via Socket.I
+        if (global.io) {
+            console.log('conJob.js: Emitting error via Socket.IO');
+            global.io.emit('crawlResultsUpdated', lastCrawlResults);
+            console.log('cronJobs.js: Emission error');
+        }
 
         // Send email notification with error
         const subject = `Crawler ${key} Error`;

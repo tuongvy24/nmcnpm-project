@@ -19,8 +19,7 @@ async function processCrawl(crawler, key) {
 
         // Emit updated crawl results via Socket.IO
         if (global.io) {
-            console.log('conJob.js: Emitting updated crawl results via Socket.IO');
-            // global.io.emit('crawlResultsUpdated', lastCrawlResults);
+            console.log('conJob.js: Emitting updated crawl results via Socket.IO');            
             global.io.emit('crawlResultsUpdated', lastCrawlResults);
         }
     } catch (error) {

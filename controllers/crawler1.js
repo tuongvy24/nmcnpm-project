@@ -101,9 +101,9 @@ async function crawlData() {
         });
 
         await browser.close();
-        console.log('Craler1: Final Conference Data:');
-        console.log('Craler1: Final Conference Data:');
-        console.log('Craler1: Final Conference Data:', data);
+        // console.log('Craler1: Final Conference Data:');
+        // console.log('Craler1: Final Conference Data:');
+        // console.log('Craler1: Final Conference Data:', data);
         return data;
     } catch (error) {
         console.error('Error while crawling data:', error);

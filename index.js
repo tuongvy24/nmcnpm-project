@@ -11,13 +11,15 @@ const { createPagination } = require('express-handlebars-paginate');
 const models = require('./models')
 
 // cronJbos de lay du lieu dinh ky
-const cronJobs = require('./controllers/cronJobs'); // Import the cron jobs
+const { crawlResultsUpdated } = require('./controllers/cronJobs'); // Import the cron jobs
 // socket.io de cap nhat du lieu realtime
+  
+ 
+
 const http = require('http');
 const socketIo = require('socket.io');
 const server = http.createServer(app);
-const io = socketIo(server); // Initialize Socket.IO server
-
+const io = socketIo(server);
 
 // khai bao passport
 const passport = require('./controllers/passport');
@@ -51,6 +53,32 @@ app.engine('hbs', expressHandlebars.engine({
 }));
 
 app.set('view engine', 'hbs');
+
+// Make io accessible globally
+global.io = io;
+// Khi một client kết nối
+io.on('connection', (socket) => {
+    console.log('A user connected');
+    // 
+    // Lắng nghe sự kiện 'message' từ client
+    socket.on('message', (message) => {
+      console.log('Received message: ' + message);
+      message = message + '. gui tu server nhe'
+      // 
+      // Gửi lại tin nhắn tới tất cả client crawlResultsUpdated
+      
+      io.emit('message', message);
+    });
+    io.emit('crawlResultsUpdated', crawlResultsUpdated);
+
+    
+   
+  
+    // Khi một client ngắt kết nối
+    socket.on('disconnect', () => {
+      console.log('User disconnected');
+    });
+});
 
 //cau hinh doc du lieu post tu body. dung them comment... cho app.post
 app.use(express.json());
@@ -87,5 +115,5 @@ app.use("/users", require("./routes/authRouter")); // xac thuc nguoi dung truoc
 app.use("/users", require("./routes/userRouter")); // them xoa sua thong tin user
 
 
-app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
+server.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
 
