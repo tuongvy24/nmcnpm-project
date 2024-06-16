@@ -23,9 +23,7 @@ const pool = new Pool({
     connectionTimeoutMillis: 20000,  // Increase timeout as needed
     idleTimeoutMillis: 30000       // Increase idle timeout as needed
 });
-// Biến toàn cục để lưu trữ số hàng đã được chèn vào cơ sở dữ liệu
-// let insertedCount = 0;
-// URL của trang web cần crawl
+
 const url = 'https://www.lix.polytechnique.fr/~hermann/conf.php';
 
 
@@ -43,18 +41,18 @@ async function crawlData() {
     
     const conferenceData = [];
 
-    // Trích xuất nội dung từ mỗi bảng có class "conference"
+    // xuat noi dung tu bang co class "conference"
     $('.conference').each((index, element) => {
       const rowData = [];
 
-      // Lấy nội dung của từng hàng trong bảng
+      // lay tung tr - hang
       $(element).find('tr').each((index, row) => {
         let rowDataItem = {};
-        // Trích xuất nội dung của mỗi ô trong hàng và thêm vào đối tượng rowDataItem
+        // lay tung td trong tr
         $(row).find('td').each((index, cell) => {
           let columnName = $(cell).attr('class');
           let value = $(cell).html().trim();
-          // Kiểm tra nếu là cột "Conference" thì trích xuất các thông tin
+          // neu la cot "Conference" thi lay href title ten hoi nghi
           if (columnName === 'confname') {
             const href = $(cell).find('a').attr('href');
             const title = $(cell).find('a').text().trim();
@@ -64,20 +62,19 @@ async function crawlData() {
             rowDataItem['conference'] = ten_hoi_nghi;
           }
           else {
-            // Nếu không phải cột "Conference" thì giữ nguyên nội dung
+            // neu ko phai "Conference"  thi giu nguyen
             rowDataItem[columnName] = value;
           }
         });
-        // Thêm đối tượng rowDataItem vào mảng rowData
+        // them rowDataItem vao mang rowData
         rowData.push(rowDataItem);
       });
 
-      // Thêm mảng rowData vào mảng conferenceData
+      // them rowData vao conferenceData
       conferenceData.push(rowData);
     });
 
-    // debug data
-    
+   
     console.log('Craler2: Final Conference Data:');
     console.log('Craler2: Final Conference Data:');
     console.log('Craler2: Final Conference Data:', conferenceData);
@@ -106,14 +103,16 @@ async function saveDataToDatabase(data) {
     try {
         await client.query('BEGIN');
 
-        // Thêm dữ liệu vào bảng Conferences
+        // them vao bang Conferences
         for (const group of data) {
             for (const conference of group) {
-                 // Kiểm tra nếu có ít nhất một giá trị khác null trong conference object       
+                // kiem tra conference co it nhat 1 gia tri khac null va web title conference phai co gia tri
+                // khi do thanh true --> cho dien vao db       
                 const hasNonNullValues = Object.values(conference).some(value => value !== null) && conference.website && conference.title && conference.conference;
 
                 if (hasNonNullValues) {   
-                  // Kiểm tra xem mục này đã tồn tại trong cơ sở dữ liệu chưa
+                // kiem 1 conference voi web, title, conference co trong db chua?
+                // kiem su ton tai, ko phai lay het
                 const checkExistenceQuery = `
                     SELECT 1 FROM Conferences
                     WHERE website = $1 AND title = $2 AND conference = $3
@@ -164,13 +163,6 @@ async function saveDataToDatabase(data) {
     return insertedCount;
 }
 
-
-
-// // // Gọi hàm crawlData để kiểm tra
-// crawlData().then(data => {
-//     // Bạn có thể thêm bất kỳ xử lý nào khác ở đây nếu cần
-//     saveDataToDatabase(data); // Lưu dữ liệu vào cơ sở dữ liệu sau khi in ra console
-// });
 
 module.exports = {
     crawlData,

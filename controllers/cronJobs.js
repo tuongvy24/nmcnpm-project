@@ -14,7 +14,7 @@ let lastCrawlResults = {
 };
 
 
-// Hàm xử lý việc crawl dữ liệu
+// ham crawle du liue
 async function processCrawl(crawler, key) {
     try {
         const data = await crawler.crawlData();
@@ -43,8 +43,8 @@ async function processCrawl(crawler, key) {
 
 // Định kỳ chạy các crawler mỗi phút: '*/1 * * * *'
 // uplen server de 60 min nhe
-cron.schedule('*/60 * * * *', () => {
-    console.log('Running crawler1 every 1 minute');
+cron.schedule('*/1 * * * *', () => {
+    console.log('Running crawler1 every 60 minute');
     processCrawl(crawler1, 'crawler1');
 });
 
@@ -54,8 +54,8 @@ cron.schedule('*/60 * * * *', () => {
 // });
 
 // Định kỳ chạy các crawler mỗi phút: '*/1 * * * *'
-cron.schedule('*/60 * * * *', () => {
-    console.log('Running crawler3 every 3 minute');
+cron.schedule('*/3 * * * *', () => {
+    console.log('Running crawler3 every 60 minute');
     processCrawl(crawler3, 'crawler3');
 });
 

@@ -7,36 +7,21 @@ const Op = sequelize.Op;
 // const { crawlData, saveDataToDatabase } = require('./crawler2');
 
 controller.init = async (req, res, next) => {
-      // lay categories dua ra view
+      // lay weblist dua ra view
     let weblists = await models.Weblist.findAll({
 
         include: [{ model: models.Conference }]
     })
     res.locals.weblists = weblists;
-
-    // let categories = await models.Category.findAll({
-    //     include: [{ model: models.Blog}]
-    // });
-    // res.locals.categories = categories;
-
-      // lay tags dua ra view
-    // let tags = await models.Tag.findAll()
-    // res.locals.tags = tags;
-
-
-    // // let tags = await models.Tag.findAll();
-    // // res.locals.tags = tags;
     next();
 }
 
 controller.viewList = async (req, res) => {
-    // let category = isNaN(req.query.category) ? 0 : parseInt(req.query.category);
     let webId = isNaN(req.query.id) ? 0 : parseInt(req.query.id);
-
     // chuc nang tim kiem
     let keyword = req.query.keyword || '';
 
-    // bao dam chi sort theo price, newest, popular thoi
+    // bao dam chi sort theo location date now_deadline thoi
     let sort = ['location', 'date', 'now_deadline'].includes(req.query.sort) ? req.query.sort : 'location';
 
     let options = {
@@ -44,23 +29,14 @@ controller.viewList = async (req, res) => {
         // include: [{model: models.Comment }],
         where: {}  
     };
-    //     // neu co category      
+    //   neu co       
     if (webId > 0) {
         options.where.weblist_id = webId;
         console.log(options)
     }
-
-    // // blog - tag quan he n-n
-    // if (tagId > 0) {
-    //     options.include.push({ model: models.Tag, where: { id: tagId }});
-    // }
-
-    // if (keyword.trim() != '') {
-    //     options.where.title = { [Op.iLike]: `%${keyword}%`}
-    // }
-
+   
     // SEARCH CHO NHIEU TRUONG - OR
-     if (keyword.trim() != '') {
+    if (keyword.trim() != '') {
         options.where[Op.or] = [
             { title: { [Op.iLike]: `%${keyword}%` } },
             { conference: { [Op.iLike]: `%${keyword}%` } },
@@ -89,11 +65,8 @@ controller.viewList = async (req, res) => {
         res.locals.originalUrl = res.locals.originalUrl + "?";
     }
 
-    // lay blogs dua ra view
-    let conferences = await models.Conference.findAll(options); 
-    // res.locals.conferences = conferences;
-    // console.log(conferences)
-    
+    // lay dua ra view
+    let conferences = await models.Conference.findAll(options);    
 
     // chuc nang phan trang
     // chuc nang phan trang. neu ko la 1, neu co thi parseInt, tu 1 trơ lên, ko am
@@ -109,12 +82,9 @@ controller.viewList = async (req, res) => {
         totalRows: conferences.length,
         queryParams: req.query
     }
-
-    // res.locals.blogs = selectedBlogs;
+   
     res.locals.conferences = selectedCons;
-
-    res.render('weblists-con');
-    // res.send('to homepage')
+    res.render('weblists-con');    
 }
 
 controller.viewDetails = async (req, res) => {
@@ -136,7 +106,6 @@ controller.viewDetails = async (req, res) => {
 }
 
 
-// const { crawlData, saveDataToDatabase } = require('./crawler2');
 controller.addWeblist = async (req, res) => {
     const selectedWebsite = req.body.selectedWebsite;
     let crawlData, saveDataToDatabase; // Di chuyển khai báo ra ngoài khối switch

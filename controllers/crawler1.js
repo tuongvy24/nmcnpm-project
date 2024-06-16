@@ -23,32 +23,25 @@ const pool = new Pool({
 
 async function crawlData() {
     try {        
-        url = 'https://ccfddl.github.io/';
-
-        // // puppeteer
-        // const browser = await puppeteer.launch();
-        // const page = await browser.newPage();
-        // await page.goto(url);
-        // const htmlContent = await page.content();
-        // const $ = cheerio.load(htmlContent);
-        
+        url = 'https://ccfddl.github.io/';       
 
         // test moi ca 2 moi truong
         let browser;
 
+        // cho moi truong web 
         if (process.env.NODE_ENV === 'production') {
             // Puppeteer launch configuration for production (e.g., Docker)
             browser = await puppeteer.launch({
                 args: [
-                    '--disable-setuid-sandbox',
-                    '--no-sandbox', 
-                    '--single-process',
+                    '--disable-setuid-sandbox', //Vô hiệu hóa sandbox setuid, thường được sử dụng trong môi trường chứa Docker để tránh vấn đề quyền truy cập
+                    '--no-sandbox', //Vô hiệu hóa sandbox bảo mật, giúp tránh một số lỗi trong môi trường hạn chế.
+                    '--single-process', //giam tai nguyen
                     '--no-zygote',
                 ],
                 executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
             });
         } else {
-            // Simplified Puppeteer launch configuration for local development
+            // Simplified Puppeteer launch configuration for localhost nhe
             browser = await puppeteer.launch();
         }
 
@@ -71,13 +64,13 @@ async function crawlData() {
                     columnName = 'title';
                     break;
                 case 1:                       
-                        // Tách thông tin ngày và địa điểm từ cột col_1 bằng biểu thức chính quy
+                        // lay date va location tu cot col_1 bang bieu thuc regex
                     const col1Content = $(div).text().trim();
                     const dateRegex = /^(.*?\d{4})/; // Biểu thức chính quy để tìm ngày
                     const locationRegex = /\d{4}(.*)/; // Biểu thức chính quy để tìm địa điểm
                     const dateMatch = col1Content.match(dateRegex);
                     const locationMatch = col1Content.match(locationRegex);
-                    rowData['date'] = dateMatch ? dateMatch[0].trim() : ''; 
+                    rowData['date'] = dateMatch ? dateMatch[0].trim() : ''; //neu co lay dateMatch loai khoang trang, neu ko rong
                     rowData['location'] = locationMatch ? locationMatch[1].trim() : ''; 
                     break;
                 case 2:
@@ -125,10 +118,13 @@ async function saveDataToDatabase(data) {
         await client.query('BEGIN');
 
         for (const conference of data) {
+             // kiem tra conference co it nhat 1 gia tri khac null va web title conference phai co gia tri
+            // khi do thanh true --> cho dien vao db
             const hasNonNullValues = Object.values(conference).some(value => value !== null) && conference.website && conference.title && conference.conference;
 
             if (hasNonNullValues) {
-                // Kiểm tra xem mục này đã tồn tại trong cơ sở dữ liệu chưa
+                // kiem 1 conference voi web, title, conference co trong db chua?
+                // kiem su ton tai, ko phai lay het
                 const checkExistenceQuery = `
                     SELECT 1 FROM Conferences
                     WHERE website = $1 AND title = $2 AND conference = $3

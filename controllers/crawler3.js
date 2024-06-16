@@ -27,54 +27,49 @@ pool.on('error', (err) => {
     console.error('Unexpected error on idle client', err);
     process.exit(-1);
 });
-// Biến toàn cục để lưu trữ số hàng đã được chèn vào cơ sở dữ liệu
-// let insertedCount = 0;
-// URL của trang web để crawl dữ liệu
+
 const url = 'https://www.computer.org/conferences/top-computer-science-events';
 
-// Hàm để crawl dữ liệu từ trang web
+// ham crawle du lieu
 async function crawlData() {
     try {
-        const response = await axios.get(url);
+        const response = await axios.get(url); // gui url toi may chu web ko qua trinh duyet
         const $ = cheerio.load(response.data);
 
         const conferences = [];
 
-        // Lặp qua các phần tử <h3>
+        // lap qua phan tu  <h3>
         $('h3').each((index, element) => {
-            // Lấy tiêu đề từ phần tử <h3> hiện tại
             const titleAndConference = $(element).text().trim();
 
-            // Lấy giá trị href từ thẻ a
+            // website tu the a
             const website = $(element).find('a').attr('href');
 
-            // Tìm vị trí của dấu ngoặc kép "(" và ")"
+            // tim dau ngoac "(" và ")"
             const startIndex = titleAndConference.indexOf('(');
             const endIndex = titleAndConference.lastIndexOf(')');
 
-            // Kiểm tra xem có đủ cặp dấu ngoặc kép hay không
+            // ko co ngoac ko title ko chon lay
             if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
-                // Tách chuỗi thành title và conference
+                // title trong dau ngoac, conference con lai
                 const conference = titleAndConference.slice(0, startIndex).trim();
                 const title = titleAndConference.slice(startIndex + 1, endIndex).trim();
-
-                // Lấy phần nội dung từ details_1
+                
                 const details_1 = $(element).next('p').text().trim();
 
-                // Tìm vị trí của dấu "/"
+                // tim "/"
                 const slashIndex = details_1.indexOf('/');
                 if (slashIndex !== -1) {
-                    // Tách chuỗi thành date và location
+                    // lay date và location
                     const date = details_1.slice(0, slashIndex).trim();
                     const location = details_1.slice(slashIndex + 1).trim();
                     
-                    // Lấy hai phần tử <p> kế tiếp của phần tử <h3> hiện tại
+                    // tim <p> thu 2 sau <h3> 
                     const remark = $(element).nextAll('p').eq(1).text().trim();
 
-                    // Tạo một đối tượng conference từ thông tin đã trích xuất
                     const conferenceObject = { title, conference, date, location, remark, website };
 
-                    // Thêm conference vào mảng conferences
+                    // them con vao mang conferences
                     conferences.push(conferenceObject);
                 }
             }
@@ -103,20 +98,21 @@ async function crawlData() {
     }
 }
 
-// Hàm để lưu dữ liệu vào cơ sở dữ liệu
+// luu vao database
 async function saveDataToDatabase(data) {
     const client = await pool.connect(); 
     let insertedCount = 0;
     try {
         await client.query('BEGIN');
-
-        // Thêm dữ liệu vào bảng Conferences
+        
         for (const conference of data) {
-            // Kiểm tra nếu có ít nhất một giá trị khác null trong conference object
+            // kiem tra conference co it nhat 1 gia tri khac null va web title conference phai co gia tri
+            // khi do thanh true --> cho dien vao db
             const hasNonNullValues = Object.values(conference).some(value => value !== null) && conference.website && conference.title && conference.conference;
 
             if (hasNonNullValues) {
-                // Kiểm tra xem mục này đã tồn tại trong cơ sở dữ liệu chưa
+                // kiem 1 conference voi web, title, conference co trong db chua?
+                // kiem su ton tai, ko phai lay het
                 const checkExistenceQuery = `
                     SELECT 1 FROM Conferences
                     WHERE website = $1 AND title = $2 AND conference = $3
@@ -124,7 +120,7 @@ async function saveDataToDatabase(data) {
                 const checkExistenceParams = [conference.website, conference.title, conference.conference];
                 const result = await client.query(checkExistenceQuery, checkExistenceParams);
 
-                if (result.rowCount === 0) {
+                if (result.rowCount === 0) { //neu ko ton tai
                     const insertQuery = `
                         INSERT INTO Conferences (website, title, conference, location, now_deadline, date, running_date, starting_date, ending_date, notification, subformat, weblist_id)
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
