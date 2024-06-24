@@ -1,5 +1,6 @@
 
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
     <div class="container">
@@ -20,7 +21,9 @@
             <div class="col-md-3">
                 <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" id="dashboard-nav" data-toggle="pill" href="#dashboard-tab" role="tab">Dashboard</a>                  
-                    <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab">Payment Method</a>
+                    <a class="nav-link" href="/friends/friend-requests">Friend Requests</a>
+                    <a class="nav-link" href="/messages/inbox">Message Inbox</a>
+                    
                     <a class="nav-link" id="address-nav" data-toggle="pill" href="#address-tab" role="tab">Address</a>
                     <a class="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab">Account Details</a>
                     <a class="nav-link" href="/users/logout">Logout</a>
@@ -33,6 +36,34 @@
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla tristique viverra nisl, sit amet bibendum ante suscipit non. Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus scelerisque.
                         </p> 
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>Activity History</h3>
+                                <canvas id="activityChart"></canvas>
+
+
+                            </div>
+                            <div class="col-md-6">
+                                <h3>Friends</h3>
+                                <ul class="list-group">
+                                {{#each user.SentRequests}}
+                                    <li class="list-group-item">Friend Request to: {{this.Receiver.firstName}} {{this.Receiver.lastName}}</li>
+                                {{/each}}
+                                {{#each user.ReceivedRequests}}
+                                    <li class="list-group-item">Friend Request from: {{this.Requester.firstName}} {{this.Requester.lastName}}</li>
+                                {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+                        <h2>Activity History</h2>
+                        <ul>
+                            {{#each activities}}
+                            <li>{{this.action}} - {{this.createdAt}}</li>
+                            {{/each}}
+                        </ul>
                     </div>
                     <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
                         <div class="table-responsive">
@@ -144,3 +175,38 @@
     </div>
 </div>
 <!-- My Account End -->
+
+
+  <script>
+  // Render activity labels và activity data vào các biến JavaScript
+    const activityLabels = {{{json activityLabels}}};
+    const activityData = {{{json activityData}}};
+
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('Activity Labels:', activityLabels);
+    console.log('Activity Data:', activityData);
+
+    // Các đoạn mã khác cho biểu đồ
+    const ctx = document.getElementById('activityChart').getContext('2d');
+    const activityChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: activityLabels,
+        datasets: [{
+          label: 'Activity',
+          data: activityData,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+</script>

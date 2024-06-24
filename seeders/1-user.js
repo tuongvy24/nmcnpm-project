@@ -14,6 +14,14 @@ module.exports = {
         isAdmin: true,
       },
       {
+        email: "user@abc.net",
+        password: "kUzhyPDAB",
+        firstName: "User",
+        lastName: "ABC",
+        mobile: "685-500-0168",
+        imagePath: "/img/blog/details/details-author.jpg",
+      },
+      {
         email: "lcarlick1@furl.net",
         password: "kUzhyPDAB",
         firstName: "Lisle",
@@ -31,10 +39,11 @@ module.exports = {
         isAdmin: true,
       },     
     ];
-    // items.forEach((item) => {
-    //   item.createdAt = Sequelize.literal("NOW()");
-    //   item.updatedAt = Sequelize.literal("NOW()");
-    // });
+    // dung de tao ngay gio cho user
+    items.forEach((item) => {
+      item.createdAt = Sequelize.literal("NOW()");
+      item.updatedAt = Sequelize.literal("NOW()");
+    });
     await queryInterface.bulkInsert("users", items, {});
   },
 

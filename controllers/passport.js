@@ -81,13 +81,17 @@ passport.use('local-register', new LocalStrategy({
         if (user) { //neu email co ton tai roi registerMessage  
             return done(null, false, req.flash('registerMessage', 'Email is already taken!'));
         }
+        // Set isAdmin based on your requirements
+        let isAdmin = req.body.isAdmin || false; // Default to false if not specified
+
         // neu email chua dang ky, thi lay gia tri tu nguoi dung nhap vao, luu db
         user = await models.User.create({
             email: email,
             password: bcrypt.hashSync(password, bcrypt.genSaltSync(8)),
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            mobile: req.body.mobile
+            mobile: req.body.mobile, 
+            isAdmin: isAdmin
         });
         // thong bao dang ky thanh cong
         done(null, false, req.flash('registerMessage', 'You have registered successfully. Please login!'))

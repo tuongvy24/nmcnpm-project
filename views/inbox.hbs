@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inbox</title>
+</head>
+<body>
+    <h1>Inbox</h1>
+    <ul>
+        {{#each messages}}
+            <li>
+                From: {{this.Sender.firstName}} {{this.Sender.lastName}} - {{this.content}} - {{this.createdAt}}
+            </li>
+        {{/each}}
+    </ul>
+    <h2>Send Message</h2>
+    <form action="/messages/send" method="post">
+        <input type="hidden" name="senderId" value="{{userId}}">
+        <label for="receiverId">Receiver ID:</label>
+        <input type="text" id="receiverId" name="receiverId" required>
+        <label for="content">Message:</label>
+        <textarea id="content" name="content" required></textarea>
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>

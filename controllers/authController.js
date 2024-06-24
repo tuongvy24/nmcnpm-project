@@ -4,6 +4,7 @@
 const controller = {};
 const passport = require('./passport');
 const models = require('../models');
+const addActivity = require('./activityService'); // Đảm bảo đường dẫn đúng
 
 // goi ham show khi vao login
 controller.show = (req, res) => {
@@ -32,14 +33,21 @@ controller.login = (req, res, next) => {
         } 
         //neu DANG NHAP THANH CONG
         // Chuyen sang users/my-account
-        req.logIn(user, (error) => {
+        req.logIn(user, async (error) => {
             if (error) { return next(error); }
             // luu session 24 gio neu dung keepSignIn
             req.session.cookie.maxAge = keepSignedIn ? (24 * 60 * 60 * 1000) : null;           
+
+            // Ghi lại hoạt động đăng nhập
+            await addActivity(user.id, 'User logged in');
+            console.log(`userId: ${user.id}, action: User logged in`)
             return res.redirect(reqUrl);
         });
     })(req, res, next);
 }
+
+
+
 
 controller.logout = (req, res, next) => {    
     // dung logout cua passport
@@ -57,6 +65,15 @@ controller.isLoggedIn = (req, res, next) => {
     }
     // neu chua dang nhap
     res.redirect(`/users/login?reqUrl=${req.originalUrl}`);
+}
+
+// kiem tra co phai admin ko
+controller.isAdmin = (req, res, next) => {     
+    if (req.isAuthenticated() && req.user.isAdmin) {
+        return next();
+    }
+    res.status(403).send('Forbidden');
+     
 }
 
 // local-register

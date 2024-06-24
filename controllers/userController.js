@@ -2,18 +2,11 @@ const controller = {};
 const models = require("../models");
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
+const { User, Activity, FriendRequest } = require('../models');
 
-
-// controller.init = async (req, res, next) => {
-//   // lay categories dua ra view
-//   let weblists = await models.Weblist.findAll({
-//     include: [{ model: models.Conference }]
-//   })
-//   res.locals.weblists = weblists;
-
-//   next();
-// }
-
+// 
+// phan nay controller cua admin de quan ly user
+// 
 controller.show = async (req, res) => {
   // chuc nang tim kiem
   let keyword = req.query.keyword || '';
@@ -55,8 +48,6 @@ controller.show = async (req, res) => {
   res.render("user-management");
 };
 
-
-
 controller.addUser = async (req, res) => {
   console.log(req.body) // kiem tra du lieu tu user gui len
 
@@ -95,4 +86,54 @@ controller.editUser = async (req, res) => {
       res.send("can not edit user!");
     }
 }
+
+
+
+// 
+// Phan nay cua user: dashboard, lich su hoat dong, dia chi...
+// 
+// ham dung truy xuat va show lich su hoat dong
+controller. showActivity = async (req, res) => {
+  const userId = req.user.id; // set req.user
+  try {
+    const activities = await models.Activity.findAll({
+      where: { userId },
+      order: [['createdAt', 'DESC']]
+    });
+
+    const user = await User.findByPk(userId, {
+      include: [
+        { model: Activity, as: 'Activities' },
+        { model: FriendRequest, as: 'SentRequests', include: ['Receiver'] },
+        { model: FriendRequest, as: 'ReceivedRequests', include: ['Requester'] }
+      ]
+    });    
+
+    const activityHistory = user.Activities.map(activity => ({
+        action: activity.action,
+        date: activity.createdAt
+      }));
+  
+      // Chuẩn bị dữ liệu cho biểu đồ hoạt động
+      const activityLabels = activityHistory.map(activity => activity.date.toLocaleDateString());
+      console.log(`activityLabels: ${activityLabels}`)
+      const activityData = activityHistory.map(activity => 1); // Giá trị hoạt động mẫu (1)
+      console.log(`activityData: ${activityData}`)
+
+      res.render('my-account', {
+        user,
+        activityLabels,
+        activityData, 
+        activities
+      });
+
+
+    // res.json(activities);
+    // res.render('my-account', { activities });
+  } catch (error) {
+    console.error('Error retrieving activities:', error);
+    res.status(500).send('Internal Server Error');
+  }
+}
+
 module.exports = controller;

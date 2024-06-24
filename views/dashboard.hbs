@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-5">User Dashboard</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Activity History</h3>
+        <canvas id="activityChart"></canvas>
+
+
+      </div>
+      <div class="col-md-6">
+        <h3>Friends</h3>
+        <ul class="list-group">
+          {{#each user.SentRequests}}
+            <li class="list-group-item">Friend Request to: {{this.Receiver.firstName}} {{this.Receiver.lastName}}</li>
+          {{/each}}
+          {{#each user.ReceivedRequests}}
+            <li class="list-group-item">Friend Request from: {{this.Requester.firstName}} {{this.Requester.lastName}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // Render activity labels và activity data vào các biến JavaScript
+    const activityLabels = {{{json activityLabels}}};
+    const activityData = {{{json activityData}}};
+
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('Activity Labels:', activityLabels);
+    console.log('Activity Data:', activityData);
+
+    // Các đoạn mã khác cho biểu đồ
+    const ctx = document.getElementById('activityChart').getContext('2d');
+    const activityChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: activityLabels,
+        datasets: [{
+          label: 'Activity',
+          data: activityData,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+</script>
+
+
+  <canvas id="myChart"></canvas>
+</body>
+</html>

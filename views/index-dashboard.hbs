@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>User Dashboard</h1>
+
+    <h2>User Information</h2>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Image</th>
+            <th>Is Admin</th>
+        </tr>
+        {{#each users}}
+        <tr>
+            <td>{{firstName}}</td>
+            <td>{{lastName}}</td>
+            <td>{{email}}</td>
+            <td>{{mobile}}</td>
+            <td><img src="{{imagePath}}" alt="User Image" width="50"></td>
+            <td>{{isAdmin}}</td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <h2>Activity History</h2>
+    <table>
+        <tr>
+            <th>User ID</th>
+            <th>Action</th>
+            <th>Date</th>
+        </tr>
+        {{#each activities}}
+        <tr>
+            <td>{{userId}}</td>
+            <td>{{action}}</td>
+            <td>{{createdAt}}</td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <h2>Friend Requests</h2>
+    <table>
+        <tr>
+            <th>Requester</th>
+            <th>Receiver</th>
+            <th>Status</th>
+        </tr>
+        {{#each friendRequests}}
+        <tr>
+            <td>{{Requester.firstName}} {{Requester.lastName}}</td>
+            <td>{{Receiver.firstName}} {{Receiver.lastName}}</td>
+            <td>{{status}}</td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <h2>Messages</h2>
+    <table>
+        <tr>
+            <th>Sender</th>
+            <th>Receiver</th>
+            <th>Content</th>
+            <th>Read</th>
+            <th>Date</th>
+        </tr>
+        {{#each messages}}
+        <tr>
+            <td>{{Sender.firstName}} {{Sender.lastName}}</td>
+            <td>{{Receiver.firstName}} {{Receiver.lastName}}</td>
+            <td>{{content}}</td>
+            <td>{{read}}</td>
+            <td>{{createdAt}}</td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <h2>Users Chart</h2>
+    <canvas id="userChart" width="400" height="200"></canvas>
+    <script>
+        const ctx = document.getElementById('userChart').getContext('2d');
+        const userNames = {{{json userNames}}};
+        const userIds = {{{json userIds}}};
+
+        const userChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: userNames,
+                datasets: [{
+                    label: 'Users',
+                    data: userIds,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+     <h2>Users Activity Chart</h2>
+    <canvas id="userActivityChart" width="400" height="200"></canvas>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const ctx = document.getElementById('userActivityChart').getContext('2d');
+            const userActivityData = JSON.parse('{{{json userActivityData}}}');
+            const userNames = JSON.parse('{{{json userNames}}}');
+
+            const userActivityChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: userNames,
+                    datasets: [{
+                        label: 'User Activities',
+                        data: userActivityData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

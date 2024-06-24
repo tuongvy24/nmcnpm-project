@@ -11,6 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       // User.hasMany(models.Blog, { foreignKey: "authorId" });
       User.hasMany(models.Conference, { foreignKey: "userId" });
+      User.hasMany(models.Activity, { foreignKey: "userId" });
+      // Liên kết mới với FriendRequest
+      User.hasMany(models.FriendRequest, { as: 'SentRequests', foreignKey: 'requesterId' });
+      User.hasMany(models.FriendRequest, { as: 'ReceivedRequests', foreignKey: 'receiverId' });
+
+      User.hasMany(models.Message, { as: 'SentMessages', foreignKey: 'senderId' });
+      User.hasMany(models.Message, { as: 'ReceivedMessages', foreignKey: 'receiverId' });
+  
+      
       // Weblist.hasMany(models.Conference, { foreignKey: "weblist_id" });
     }
   }
@@ -33,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "User",
       tableName: "users", // Đặt tên bảng là "weblists" để khớp với tên bảng trong cơ sở dữ liệu
-      timestamps: false
+      timestamps: true
     }
   );
   return User;

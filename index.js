@@ -12,7 +12,7 @@ const models = require('./models')
 
 // cronJbos de lay du lieu dinh ky
 const { crawlResultsUpdated } = require('./controllers/cronJobs'); // Import the cron jobs
-// socket.io de cap nhat du lieu realtime
+const friendsRouter = require('./routes/friends');
   
  
 
@@ -27,7 +27,8 @@ const flash = require('connect-flash');
 
 // cau hinh public static folder
 app.use(express.static(__dirname + '/html'));
-
+// app.use(express.static(__dirname + '/html'));
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
 // cau hinh su dung express handlebar
 app.engine('hbs', expressHandlebars.engine({
@@ -48,6 +49,9 @@ app.engine('hbs', expressHandlebars.engine({
                 month: "long",
                 day: "numeric"
             });
+        },
+        json: (context) => {
+            return JSON.stringify(context);
         }
     }
 }));
@@ -109,11 +113,28 @@ app.get('/', (req, res) => {
     res.redirect('/home')   
 });
 
+app.get('/test', (req, res) => {
+    const data = {
+      title: 'Chart.js example'
+    };
+  
+    res.render('dashboard-test', data);
+    // dashboard-test
+  });
+
+
 app.use('/home', require('./routes/crawlersRouter'))
 app.use('/weblists', require('./routes/websRouter')); //ds hoi nghi
 app.use("/users", require("./routes/authRouter")); // xac thuc nguoi dung truoc
 app.use("/users", require("./routes/userRouter")); // them xoa sua thong tin user
 
+// gui ket ban va nhan tin noi bo
+// chua dung web socket.io--> next
+app.use('/friends', require('./routes/friends.js'));
+app.use('/messages', require('./routes/message.js'));
+
+// route den dashboard quan ly user nhe
+app.use('/users-dashboard-manager', require('./routes/users-dashboard-manager.js'))
 
 server.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
 

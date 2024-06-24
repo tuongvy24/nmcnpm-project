@@ -4,12 +4,10 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/authController');
-// lay tu validator.js
-// const { body, getErrorMessage } = require('../controllers/validator');
-
+// const { ensureAuthenticated, ensureAdmin } = require('../controllers/authorization');
 
 router.get('/login', controller.show);
-router.post('/login',controller.login);
+router.post('/login', controller.login);
 
 router.get('/logout', controller.logout);
 router.post('/register', controller.register)
@@ -22,5 +20,11 @@ router.post('/forgot', controller.forgotPassword
 router.get('/reset', controller.showResetPassword);
 router.post('/reset', controller.resetPassword
 );
+
+// Route bảo vệ bằng middleware
+router.get('/admin', controller.isLoggedIn, controller.isAdmin, (req, res) => {
+    res.send('Welcome to the admin page');
+});
+
 
 module.exports = router;

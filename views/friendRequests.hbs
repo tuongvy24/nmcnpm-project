@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friend Requests</title>
+</head>
+<body>
+    <h1>Friend Requests</h1>
+    <h2>Send Friend Request</h2>
+    <form action="/friends/send-request" method="post">
+        <input type="hidden" name="requesterId" value="{{userId}}">
+        <label for="receiverId">Receiver ID:</label>
+        <input type="text" id="receiverId" name="receiverId" required>
+        <button type="submit">Send Request</button>
+    </form>
+
+    <h2>Received Friend Requests</h2>
+    <ul>
+        {{#each receivedRequests}}
+            <li>
+                Request from User ID: {{this.requesterId}}
+                <form action="/friends/accept-request" method="post" style="display:inline;">
+                    <input type="hidden" name="requestId" value="{{this.id}}">
+                    <button type="submit">Accept</button>
+                </form>
+                <form action="/friends/reject-request" method="post" style="display:inline;">
+                    <input type="hidden" name="requestId" value="{{this.id}}">
+                    <button type="submit">Reject</button>
+                </form>
+            </li>
+        {{/each}}
+    </ul>
+</body>
+</html>
