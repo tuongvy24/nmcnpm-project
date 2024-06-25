@@ -33,6 +33,16 @@ router.get('/', async (req, res) => {
             userActivityCounts[activity.userId]++;
         });
         // 
+        // const users = [
+        //     { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com' },
+        //     { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com'}
+        // ];
+        // Hàm map lặp qua phần tử đầu tiên trong mảng users:
+        // user là { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com' }
+        // Hàm arrow trả về 'John Doe'
+        // console.log(userNames); // ['John Doe', 'Jane Smith']
+        // 
+        // ham map de tao mang cac userName moi cua mang users
         const userNames = users.map(user => `${user.firstName} ${user.lastName}`);
         const userIds = users.map(user => user.id);
         const userActivityData = users.map(user => userActivityCounts[user.id] || 0);
