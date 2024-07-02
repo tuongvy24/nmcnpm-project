@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "nmcnpmprojectdb",
-    "password": "vQy4JE9KFjxdq3iGsHLvoFwrA5a3K1UJ",
-    "database": "nmcnpmprojectdb",
-    "host": "dpg-cpc9bke3e1ms739i77lg-a.singapore-postgres.render.com",
+    "username": "nmcnpmprojectdb2",
+    "password": "vktzKeBBJdg7QGbsszAXodWNQ09CVt41",
+    "database": "nmcnpmprojectdb2",
+    "host": "dpg-cq1ud7rv2p9s73d8ndt0-a.singapore-postgres.render.com",  
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
