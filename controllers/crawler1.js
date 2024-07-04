@@ -8,10 +8,10 @@ const cheerio = require('cheerio');
 const moment = require('moment-timezone');
 
 const pool = new Pool({
-    user: 'nmcnpmprojectdb', 
-    host: 'dpg-cpc9bke3e1ms739i77lg-a.singapore-postgres.render.com',    
-    database: 'nmcnpmprojectdb',
-    password: 'vQy4JE9KFjxdq3iGsHLvoFwrA5a3K1UJ',
+    user: 'nmcnpmprojectdb2', 
+    host: 'dpg-cq1ud7rv2p9s73d8ndt0-a.singapore-postgres.render.com',    
+    database: 'nmcnpmprojectdb2',
+    password: 'vktzKeBBJdg7QGbsszAXodWNQ09CVt41',
     port: 5432,
     ssl: {
         rejectUnauthorized: false
